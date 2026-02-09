@@ -1,0 +1,20 @@
+[aws]
+disabled = true
+
+[package]
+disabled = true
+
+[azure]
+disabled = true
+
+[character]
+success_symbol = '[➜](bold green)'
+
+[cmd_duration]
+min_time = 500
+format = 'took [$duration](bold yellow)'
+
+[directory]
+truncation_length = 255
+truncate_to_repo = false
+use_logical_path = false
