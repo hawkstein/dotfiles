@@ -4,4 +4,4 @@ alias dotfiles="code ~/Projects/dotfiles"
 alias docker=podman
 
 # 10 biggest things in the current directory
-alias bgls="du -sh * | sort -rh | head -10"
+alias bgls="du -sh -- *(DN) | sort -rh | head -10"
