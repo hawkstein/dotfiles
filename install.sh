@@ -50,7 +50,8 @@ backup_conflicts() {
         mv "$target" "$BACKUP/${target#"$HOME/"}"
         echo "Backed up $target"
       fi
-    done < <(find "$DOTFILES/$pkg" -type f)
+    # Skip the files stow is told to ignore in link_dotfiles
+    done < <(find "$DOTFILES/$pkg" -type f ! -name .DS_Store)
   done
 }
 
@@ -64,7 +65,9 @@ link_dotfiles() {
   fi
 
   backup_conflicts
-  if ! stow --dir "$DOTFILES" --target "$HOME" --no-folding --restow "${PACKAGES[@]}"; then
+  # Keep --ignore in sync with the find in backup_conflicts
+  if ! stow --dir "$DOTFILES" --target "$HOME" --no-folding --ignore='\.DS_Store' \
+      --restow "${PACKAGES[@]}"; then
     echo "stow failed; see above." >&2
     if [ -d "$BACKUP" ]; then
       echo "Your previous files are in $BACKUP; move them back to restore them." >&2
