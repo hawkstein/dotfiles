@@ -75,8 +75,23 @@ link_dotfiles() {
     exit 1
   fi
   echo "Linked: ${PACKAGES[*]}"
+  create_local_gitconfig
   if [ -d "$BACKUP" ]; then
     echo "Previous files saved in $BACKUP"
+  fi
+}
+
+# `git config --global` (and so `gh auth login`) writes to ~/.gitconfig only if
+# it exists, otherwise to the tracked ~/.config/git/config. Create it so those
+# writes stay out of this repo.
+create_local_gitconfig() {
+  local file="$HOME/.gitconfig"
+  if [ -L "$file" ] && [ ! -e "$file" ]; then
+    rm "$file"
+  fi
+  if [ ! -e "$file" ]; then
+    echo "# Machine-specific git settings, not tracked in git" > "$file"
+    echo "Created $file"
   fi
 }
 

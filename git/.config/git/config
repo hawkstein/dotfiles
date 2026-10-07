@@ -1,4 +1,5 @@
-# This is Git's per-user configuration file.
+# Shared git settings. Machine-specific ones go in the untracked ~/.gitconfig,
+# which git reads after this file and `git config --global` writes to.
 [user]
 	name = Liam Hawks
 	email = 68058931+hawkstein@users.noreply.github.com

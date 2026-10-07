@@ -6,7 +6,7 @@ as it should appear in `$HOME`:
 | Package    | Links                                                  |
 | ---------- | ------------------------------------------------------ |
 | `zsh`      | `~/.zshrc`, `~/.zprofile`, `~/.config/zsh/aliases.zsh` |
-| `git`      | `~/.gitconfig`, `~/.config/git/ignore`                 |
+| `git`      | `~/.config/git/config`, `~/.config/git/ignore`         |
 | `starship` | `~/.config/starship.toml`                              |
 | `gh`       | `~/.config/gh/config.yml`                              |
 
@@ -35,4 +35,6 @@ Optional:
 ## Not in this repo
 
 - Machine-specific settings go in `~/.zprofile.local` or `~/.zshrc.local`
+- Machine-specific git settings go in `~/.gitconfig`, which `install.sh` creates empty and
+  which overrides `~/.config/git/config`. `git config --global` and `gh auth login` write there.
 - Secrets, tokens and SSH keys should be kept in 1Password
