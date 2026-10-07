@@ -3,7 +3,6 @@
 	name = Liam Hawks
 	email = 68058931+hawkstein@users.noreply.github.com
 [core]
-	ignorecase = false
 	editor = code --wait
 [filter "lfs"]
 	clean = git-lfs clean -- %f

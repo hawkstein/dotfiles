@@ -8,10 +8,10 @@ setopt EXTENDED_HISTORY
 # change directories as default command without typing cd
 setopt autocd
 
-# Homebrew-installed completions (gh, pnpm, etc.) must be on fpath before compinit
-if [ -n "$HOMEBREW_PREFIX" ]; then
-  fpath=("$HOMEBREW_PREFIX/share/zsh/site-functions" $fpath)
-fi
+# Homebrew-installed completions (gh, pnpm, etc.) are put on fpath by
+# `brew shellenv` in .zprofile; drop the duplicates that it and nested shells
+# (which inherit FPATH) add, so compinit scans each directory once
+typeset -U fpath
 
 # enable in-built zsh command auto-completion
 autoload -U compinit; compinit
