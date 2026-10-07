@@ -8,6 +8,18 @@ DOTFILES="$(cd "$(dirname "$0")" && pwd)"
 PACKAGES=(zsh git starship gh)
 BACKUP="$HOME/.dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
 
+# Put Homebrew on PATH (/opt/homebrew on Apple Silicon, /usr/local on Intel).
+# Fails if Homebrew isn't installed in either place.
+load_brew() {
+  if [ -x /opt/homebrew/bin/brew ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [ -x /usr/local/bin/brew ]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  else
+    return 1
+  fi
+}
+
 install_packages() {
   if ! xcode-select -p >/dev/null 2>&1; then
     echo "Installing Xcode Command Line Tools; re-run this script when it finishes."
@@ -15,13 +27,12 @@ install_packages() {
     exit 1
   fi
 
-  if ! command -v brew >/dev/null; then
+  if ! load_brew; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  fi
-  if [ -x /opt/homebrew/bin/brew ]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-  else
-    eval "$(/usr/local/bin/brew shellenv)"
+    if ! load_brew; then
+      echo "Homebrew didn't install; see above." >&2
+      exit 1
+    fi
   fi
 
   brew bundle --file "$DOTFILES/Brewfile" || echo "Some Brewfile entries failed; see above."
@@ -44,8 +55,22 @@ backup_conflicts() {
 }
 
 link_dotfiles() {
+  # Check for stow before moving anything, so a missing stow can't leave
+  # $HOME with its dotfiles backed up but nothing linked in their place
+  load_brew || true
+  if ! command -v stow >/dev/null; then
+    echo "GNU Stow isn't installed. Run ./install.sh (or brew install stow) first." >&2
+    exit 1
+  fi
+
   backup_conflicts
-  stow --dir "$DOTFILES" --target "$HOME" --no-folding --restow "${PACKAGES[@]}"
+  if ! stow --dir "$DOTFILES" --target "$HOME" --no-folding --restow "${PACKAGES[@]}"; then
+    echo "stow failed; see above." >&2
+    if [ -d "$BACKUP" ]; then
+      echo "Your previous files are in $BACKUP; move them back to restore them." >&2
+    fi
+    exit 1
+  fi
   echo "Linked: ${PACKAGES[*]}"
   if [ -d "$BACKUP" ]; then
     echo "Previous files saved in $BACKUP"
