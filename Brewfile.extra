@@ -1,0 +1,32 @@
+# Expanded setup, run after the core Brewfile:
+# brew bundle --file ~/Projects/dotfiles/Brewfile.extra
+
+# Languages
+brew "go"
+
+# Media
+brew "ffmpeg"
+brew "vips"
+
+# Creative
+cask "godot"
+cask "inkscape"
+cask "tiled"
+cask "texturepacker"
+cask "audacity"
+cask "handbrake-app"
+
+# Media and games
+cask "vlc"
+cask "plex"
+cask "plex-media-server"
+cask "transmission"
+cask "steam"
+cask "gog-galaxy"
+cask "discord"
+
+# App Store (sign in to the App Store first)
+brew "mas"
+mas "Pixea", id: 1507782672
+mas "WhatsApp", id: 310633997
+mas "Xcode", id: 497799835
