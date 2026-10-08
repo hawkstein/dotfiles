@@ -16,9 +16,6 @@ typeset -U fpath
 # enable in-built zsh command auto-completion
 autoload -U compinit; compinit
 
-# bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
 # Node via Vite+ (https://viteplus.dev): shims for node/npm/npx, resolved per project.
 # Sourced after compinit so it can register its completions; it moves its shims to the front of PATH.
 [ -f "$HOME/.config/vite-plus/env" ] && . "$HOME/.config/vite-plus/env"

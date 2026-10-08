@@ -24,7 +24,7 @@ to only relink.
 
 Then:
 
-- Install [Vite+](https://viteplus.dev) (using to manage Node instead of `nvm`), [rustup](https://rustup.rs) and [bun](https://bun.sh)
+- Install [Vite+](https://viteplus.dev) (using to manage Node instead of `nvm`) and [rustup](https://rustup.rs)
 - Set the iTerm2 font to **Inconsolata Nerd Font** for starship's symbols
 - `gh auth login`
 
