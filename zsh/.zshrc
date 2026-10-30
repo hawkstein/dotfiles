@@ -31,3 +31,6 @@ command -v fzf >/dev/null && source <(fzf --zsh)
 
 # Customizable prompt with starship.rs
 command -v starship >/dev/null && eval "$(starship init zsh)"
+
+# bin for global pnpm installs
+export PATH="$HOME/.local/bin:$PATH"
