@@ -38,3 +38,9 @@ Optional:
 - Machine-specific git settings go in `~/.gitconfig`, which `install.sh` creates empty and
   which overrides `~/.config/git/config`. `git config --global` and `gh auth login` write there.
 - Secrets, tokens and SSH keys should be kept in 1Password
+
+
+## Known Issues
+
+- Git does not work until xcode license has been agreed to
+- Claude CLI was not installed or and that bin was not on the path (it is now), perhaps should have installed with brew
