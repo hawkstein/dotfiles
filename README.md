@@ -26,7 +26,11 @@ Then:
 
 - Install [Vite+](https://viteplus.dev) (using to manage Node instead of `nvm`) and [rustup](https://rustup.rs)
 - Set the iTerm2 font to **Inconsolata Nerd Font** for starship's symbols
-- `gh auth login`
+- `gh auth login`, then install the [gh-stack](https://github.com/github/gh-stack) extension and skill:
+  ```sh
+  gh extension install github/gh-stack
+  gh skill install github/gh-stack
+  ```
 
 Optional:
 
